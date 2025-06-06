@@ -14,8 +14,8 @@ ssh-add ~/.ssh/$cleSSH
 # Tester la connexion SSH GitHub
 ssh -T git@github.com
 
-# Configurer l'URL du dépôt distant (si besoin)
-urlRepo="git@github.com:ETIENNE-CLR/New-Project-Maker.git"
+# Configurer l'URL du dépôt distant
+urlRepo="git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git"
 git remote set-url origin $urlRepo
 
 # Message
