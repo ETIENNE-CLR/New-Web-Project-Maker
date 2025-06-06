@@ -7,7 +7,7 @@ source git/agents.sh
 git push -u origin main || git push origin main
 
 if [ $? -eq 0 ]; then
-    bash git/_displayMessage.sh "✅ Push effectué avec succès"
+    bash git/tools/displayMessage.sh "✅ Push effectué avec succès"
 else
-    bash git/_displayMessage.sh "❌ Le push n'a pas marché"
+    bash git/tools/displayMessage.sh "❌ Le push n'a pas marché"
 fi
