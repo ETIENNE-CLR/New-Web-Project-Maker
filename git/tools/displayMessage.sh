@@ -9,7 +9,7 @@ get_display_width() {
 message="$1"
 
 # Paramètres ajustables
-marge=4            # Nombre d'espaces de chaque côté du texte
+marge=3            # Nombre d'espaces de chaque côté du texte
 max_line_length=50 # Limite de caractères par ligne avant retour à la ligne
 
 # Fonction pour couper le texte en lignes de max_line_length
