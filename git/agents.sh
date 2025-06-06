@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Lancer l'agent de connection
+# Lancer l'agent SSH
 eval "$(ssh-agent -s)"
 
 # Choisir la bonne clé SSH
@@ -11,16 +11,12 @@ cleSSH="etienneclr_key" # Clé du PC de l'école
 # Ajouter la clé à l'agent
 ssh-add ~/.ssh/$cleSSH
 
-# Tester la connexion à GitHub
+# Tester la connexion SSH GitHub
 ssh -T git@github.com
 
-# Configurer la branche distante
-brancheName="main"
-git branch --set-upstream-to=origin/$brancheName $brancheName
-
-# Configurer l'URL du dépôt distant
+# Configurer l'URL du dépôt distant (si besoin)
 urlRepo="git@github.com:ETIENNE-CLR/New-Project-Maker.git"
 git remote set-url origin $urlRepo
 
-# Afficher un petit message
+# Message
 bash git/_displayMessage.sh "Les agents sont connectés"

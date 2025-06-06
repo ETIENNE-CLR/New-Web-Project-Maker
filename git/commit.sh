@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Activer les agents une seule fois ici
-bash git/agents.sh
+# Activer les agents
+source git/agents.sh
 
 # Récupérer le message
 message="${1:-}"
