@@ -3,6 +3,5 @@
 # Activer les agents
 source git/agents.sh
 
-# Commandes
+# La/Les commande/s à executer
 git push -u origin main
-
