@@ -19,4 +19,5 @@ urlRepo="git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git"
 git remote set-url origin $urlRepo
 
 # Message
-bash git/tools/displayMessage.sh "Les agents sont connectés"
+bash git/tools/displayMessage.sh "👮‍♂️🌐 Les agents sont connectés"
+
