@@ -18,6 +18,22 @@ $app = AppFactory::create();
 $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 
+// Multi-langues
+session_start();
+if (isset($_GET['lang'])) {
+    LanguageController::setLanguage($_GET['lang']);
+}
+
+// Définition de la langue
+$lg = LanguageController::getLanguage();
+$charset = LanguageController::CHARSET;
+$locale = "$lg.$charset";
+putenv("LC_ALL=$locale");
+setlocale(LC_ALL, $locale);
+bindtextdomain('messages', __DIR__ . '/../locales');
+bind_textdomain_codeset('messages', $charset);
+textdomain('messages');
+
 // Définir les routes
 require __DIR__ . '/../src/routes/web.php';
 require __DIR__ . '/../src/routes/api.php';
