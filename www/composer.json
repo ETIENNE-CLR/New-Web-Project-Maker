@@ -3,9 +3,9 @@
     "autoload": {
         "psr-4": {
             "Etienneclr\\Www\\": "src/",
+            "Models\\": "src/models/",
             "Controllers\\": "src/controllers/",
             "Interfaces\\": "src/interfaces/",
-            "Models\\": "src/models/",
             "ActiveRecord\\": "src/models/AR/"
         }
     },

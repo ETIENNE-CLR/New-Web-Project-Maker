@@ -1,8 +1,8 @@
 <?php
 
-use Controllers\LanguageController;
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
+use Controllers\LanguageController;
 
 // Chargement des classes avec Composer
 require __DIR__ . '/../vendor/autoload.php';
@@ -18,6 +18,7 @@ $app = AppFactory::create();
 $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 
+/*
 // Multi-langues
 session_start();
 if (isset($_GET['lang'])) {
@@ -33,6 +34,7 @@ setlocale(LC_ALL, $locale);
 bindtextdomain('messages', __DIR__ . '/../locales');
 bind_textdomain_codeset('messages', $charset);
 textdomain('messages');
+*/
 
 // Définir les routes
 require __DIR__ . '/../src/routes/web.php';
