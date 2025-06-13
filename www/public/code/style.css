@@ -21,6 +21,7 @@ a {
 }
 
 .card {
+    cursor: pointer;
     transition: all 0.15s;
     transform: scale(1);
 }
