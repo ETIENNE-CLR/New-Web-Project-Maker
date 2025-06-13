@@ -1,5 +1,7 @@
 <?php
 
+namespace ActiveRecord;
+
 use Interfaces\ICRUD;
 use Models\PDOSingleton;
 
