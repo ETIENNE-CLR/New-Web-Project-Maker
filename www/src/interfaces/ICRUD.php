@@ -2,11 +2,13 @@
 
 namespace Interfaces;
 
+/**
+ * Interface pour les records CRUD
+ */
 interface ICRUD
 {
-    public function create();
-    static function readAll();
-    static function read(int $id);
-    public function update();
-    static function delete(int $id);
+    public static function read(int $id): ?static;
+    public static function readAll(): array;
+    public function save(): bool;
+    public function delete(): bool;
 }
