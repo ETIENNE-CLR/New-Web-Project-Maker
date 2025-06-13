@@ -4,41 +4,38 @@ namespace Models;
 
 use PDO;
 use PDOException;
+use RuntimeException;
 
 class PDOSingleton
 {
-    // Instance unique
     private static ?PDO $instance = null;
 
-    // Configuration de la base de données
-    private const DB_HOST = 'localhost';
-    private const DB_NAME = 'xxxxxx';
-    private const DB_USER = 'root';
-    private const DB_PASS = 'Super';
-    private const DB_CHARSET = 'utf8mb4';
-
-    // Constructeur privé pour empêcher l'instanciation directe
     private function __construct() {}
+    private function __clone(): void {}
+    private function __wakeup(): void {}
 
-    // Méthode pour obtenir l'instance unique
     public static function getInstance(): PDO
     {
         if (self::$instance === null) {
             try {
-                $dsn = 'mysql:host=' . self::DB_HOST . ';dbname=' . self::DB_NAME . ';charset=' . self::DB_CHARSET;
-                self::$instance = new PDO($dsn, self::DB_USER, self::DB_PASS);
-                self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                self::$instance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+                $dsn = sprintf(
+                    'mysql:host=%s;dbname=%s;charset=%s',
+                    $_ENV['DB_HOST'],
+                    $_ENV['DB_NAME'],
+                    $_ENV['DB_CHARSET']
+                );
+
+                self::$instance = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASS'], [
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES => false
+                ]);
             } catch (PDOException $e) {
-                die('Erreur de connexion à la base de données : ' . $e->getMessage());
+                error_log($e->getMessage());
+                throw new RuntimeException('Erreur de connexion à la base de données.');
             }
         }
+
         return self::$instance;
     }
-
-    // Empêcher le clonage de l'objet
-    public function __clone() {}
-
-    // Empêcher la désérialisation de l'objet
-    public function __wakeup() {}
 }

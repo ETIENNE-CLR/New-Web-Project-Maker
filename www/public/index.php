@@ -1,16 +1,20 @@
 <?php
 
-// Indiquer les classes à utiliser
 use Controllers\LanguageController;
+use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 
-// Activer le chargement automatique des classes
+// Chargement des classes avec Composer
 require __DIR__ . '/../vendor/autoload.php';
 
-// Créer l'application
+// Charger les variables d'environnement depuis .env
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+// Créer l'application Slim
 $app = AppFactory::create();
 
-// Ajouter certains traitements d'erreurs
+// Middleware
 $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 
