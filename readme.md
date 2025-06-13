@@ -12,7 +12,7 @@ L'idée est simple :
 ## Comment utiliser ce projet ? - Comment créer un projet web
 1. Cloner ce dépôt :
     ```bash
-    git clone git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git mon-nouveau-projet/
+    git clone https://github.com/ETIENNE-CLR/New-Web-Project-Maker.git mon-nouveau-projet/
     cd mon-nouveau-projet/
     ```
 
