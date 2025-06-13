@@ -61,6 +61,7 @@ L'idée est simple :
 
 7. Commencez à coder !
     > Vous trouverez un fichier `/www/env/commandes.pdf` qui donne chaque commandes à executer pour lancer le vhost.
+    > Avant de lancer le vhost, pensez bien à modifier le fichier `.conf` !
 
 ## Contenu
 - Framework Slim configuré et prêt  
