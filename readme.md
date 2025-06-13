@@ -10,6 +10,7 @@ L'idée est simple :
 - Ensuite tu commences à développer ton projet rapidement sans repartir de zéro  
 
 ## Comment utiliser ce projet ? - Comment créer un projet web
+### Structure Git
 1. Cloner ce dépôt :
     ```bash
     git clone https://github.com/ETIENNE-CLR/New-Web-Project-Maker.git mon-nouveau-projet/
@@ -18,25 +19,47 @@ L'idée est simple :
 
 2. Changer l'URL du repo **important** :<br>
     Dans le fichier `git/agents.sh`, changez la ligne qui définit l'URL du repo avec l'URL de **VOTRE** repo.
+    > La ligne qui définit la variable `urlRepo` :
+    > ```bash
+    > urlRepo="git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git"
+    > ```
 
-    Cette ligne :
+3. Tu crées le premier commit de ton nouveau projet :
     ```bash
-    urlRepo="git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git"
+    bash git/commit.sh "first commit - initialisation from 'https://github.com/ETIENNE-CLR/New-Web-Project-Maker.git'"
     ```
 
-3. Installer les dépendances via Composer :
+### Structure PHP
+4. Installer les dépendances via Composer :
     ```bash
     cd www
     composer install
     cd ..
     ```
-
-4. Tu crées le premier commit de ton nouveau projet :
+5. **IMPORTANT !!**<br>
+    Si vous allez utiliser **une base de donnée,** vous allez devoir créer le fichier `.env` **à la racine** du projet web :
     ```bash
-    bash git/autoPush.sh "first commit - initialisation from 'ETIENNE-CLR/New-Web-Project-Maker.git'"
+    cd www
+    touch .env
+    sudo vi .env
+    ```
+    Dans ce fichier `.env`, insérez le contenu ci-dessous :
+    ```env
+    DB_HOST=localhost
+    DB_NAME=ma_base
+    DB_USER=root
+    DB_PASS=Super
+    DB_CHARSET=utf8mb4
+    ```
+    > Bien sûr, changez les informations de *votre Base de Donnée* pour que cela convienne à votre environnement
+
+6. Recommittez les changements !
+    ```bash
+    bash git/commit.sh "intialisation de mon fichier `.env` pour la bdd"
     ```
 
-5. Commencez à coder !
+
+7. Commencez à coder !
     > Vous trouverez un fichier `/www/env/commandes.pdf` qui donne chaque commandes à executer pour lancer le vhost.
 
 ## Contenu
