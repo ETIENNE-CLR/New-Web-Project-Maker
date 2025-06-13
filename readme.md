@@ -5,9 +5,9 @@ Base de projet PHP Slim avec API pour démarrer rapidement un nouveau site web
 Ce dépôt est une **base de projet web** prête à l'emploi, construite autour du micro-framework [Slim PHP](https://www.slimframework.com/). 
 
 L'idée est simple :  
-- Quand tu veux créer un nouveau site ou une API en PHP Slim, tu clones ce repo  
-- Puis tu changes l'URL du dépôt distant (origin) pour ton propre repo  
-- Ensuite tu commences à développer ton projet rapidement sans repartir de zéro  
+- Quand tu veux créer un nouveau site ou une API en PHP Slim, tu clones ce repo
+- Puis tu changes l'URL du dépôt distant (origin) pour ton propre repo
+- Ensuite tu commences à développer ton projet rapidement sans repartir de zéro
 
 ## Comment utiliser ce projet ? - Comment créer un projet web
 ### Structure Git

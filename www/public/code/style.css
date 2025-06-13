@@ -1,0 +1,44 @@
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding: 5% 0;
+    background-size: 300% 300%;
+    background: linear-gradient(270deg,
+            #FFC107, #FF9800, #FF5722, #F44336,
+            #E91E63, #9C27B0, #673AB7);
+    animation: bg-gradient 20s infinite linear;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+    color: whitesmoke !important;
+    text-shadow: 1px 1px 1px black;
+}
+
+a {
+    color: whitesmoke !important;
+    text-shadow: none;
+}
+
+.card {
+    transition: all 0.15s;
+    transform: scale(1);
+}
+
+.card:hover {
+    transform: scale(1.025);
+}
+
+@keyframes bg-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
