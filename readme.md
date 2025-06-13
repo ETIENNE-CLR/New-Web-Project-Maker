@@ -16,19 +16,27 @@ L'idée est simple :
     cd mon-nouveau-projet/
     ```
 
-2. Installer les dépendances via Composer :
+2. Changer l'URL du repo **important** :<br>
+    Dans le fichier `git/agents.sh`, changez la ligne qui définit l'URL du repo avec l'URL de **VOTRE** repo.
+
+    Cette ligne :
+    ```bash
+    urlRepo="git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git"
+    ```
+
+3. Installer les dépendances via Composer :
     ```bash
     cd www
     composer install
     cd ..
     ```
 
-3. Tu crées le premier commit de ton nouveau projet :
+4. Tu crées le premier commit de ton nouveau projet :
     ```bash
     bash git/autoPush.sh "first commit - initialisation from 'ETIENNE-CLR/New-Web-Project-Maker.git'"
     ```
 
-3. Commencez à coder !
+5. Commencez à coder !
     > Vous trouverez un fichier `/www/env/commandes.pdf` qui donne chaque commandes à executer pour lancer le vhost.
 
 ## Contenu
