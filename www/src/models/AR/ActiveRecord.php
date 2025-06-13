@@ -4,17 +4,35 @@ use Interfaces\ICRUD;
 use Models\PDOSingleton;
 
 /**
- * Classe abstraite pour les actives records
+ * Classe abstraite ActiveRecord
+ *
+ * Fournit des méthodes de base pour manipuler les enregistrements en base de données
+ * selon le modèle Active Record (CRUD). Elle doit être étendue par chaque modèle métier.
+ *
+ * @package Models
  */
 abstract class ActiveRecord implements ICRUD
 {
+    /**
+     * Nom de la table associée au modèle
+     * Doit être défini dans la classe enfant.
+     *
+     * @var string
+     */
     protected static string $table;
+
+    /**
+     * Identifiant unique de l'enregistrement
+     *
+     * @var int
+     */
     public int $id;
 
     /**
-     * Fonction pour lire un record
-     * @param int $id Identifiant du record
-     * @return ?static Objet contenant le record
+     * Récupère un enregistrement en base par son identifiant
+     *
+     * @param int $id Identifiant du record à récupérer
+     * @return static|null Instance du modèle avec les données ou null si non trouvé
      */
     public static function read(int $id): ?static
     {
@@ -25,8 +43,9 @@ abstract class ActiveRecord implements ICRUD
     }
 
     /**
-     * Fonction pour récupérer tous les records de la table
-     * @return array Tableau contenant tous les records
+     * Récupère tous les enregistrements de la table
+     *
+     * @return static[] Tableau d'instances du modèle contenant tous les enregistrements
      */
     public static function readAll(): array
     {
@@ -36,12 +55,15 @@ abstract class ActiveRecord implements ICRUD
     }
 
     /**
-     * Fonction pour sauvegarder les modifications des propriétés. Pour utiliser le `update`, il faut **définir l'id**.
-     * @return bool **True** si l'enregistrement est un succès. **False** si c'est un échec
+     * Enregistre ou met à jour l'enregistrement courant en base de données
+     *
+     * - Si la propriété `id` n’est pas définie, un nouvel enregistrement est inséré.
+     * - Sinon, l’enregistrement existant est mis à jour.
+     *
+     * @return bool True si l’opération a réussi, False sinon
      */
     public function save(): bool
     {
-        // Init
         $pdo = PDOSingleton::getInstance();
         $properties = get_object_vars($this);
         unset($properties['id']);
@@ -63,8 +85,9 @@ abstract class ActiveRecord implements ICRUD
     }
 
     /**
-     * Fonction permettant de supprimer le record
-     * @return bool **True** si la suppression est un succès. **False** si c'est un échec
+     * Supprime l'enregistrement courant de la base de données
+     *
+     * @return bool True si la suppression a réussi, False sinon
      */
     public function delete(): bool
     {
@@ -75,9 +98,10 @@ abstract class ActiveRecord implements ICRUD
     }
 
     /**
-     * Fonction permettant de transformer un tableau associatif d'un record en objet
-     * @param array $data Tableau associatif à transformer
-     * @return static Record transformé en objet
+     * Crée une instance du modèle à partir d’un tableau associatif (données SQL)
+     *
+     * @param array $data Données à injecter dans le modèle
+     * @return static Instance du modèle remplie avec les données
      */
     protected static function fromArray(array $data): static
     {
