@@ -23,6 +23,7 @@
         "guzzlehttp/psr7": "^2",
         "laminas/laminas-diactoros": "^3.6",
         "slim/php-view": "^3.4",
-        "firebase/php-jwt": "^6.11"
+        "firebase/php-jwt": "^6.11",
+        "vlucas/phpdotenv": "^5.6"
     }
 }
