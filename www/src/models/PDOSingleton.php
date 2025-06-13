@@ -6,14 +6,45 @@ use PDO;
 use PDOException;
 use RuntimeException;
 
+/**
+ * Classe PDOSingleton
+ *
+ * Gère une connexion unique à la base de données à l'aide du pattern Singleton.
+ * Cette classe empêche l’instanciation multiple, le clonage et la désérialisation.
+ * Les paramètres de connexion sont chargés à partir des variables d’environnement ($_ENV).
+ *
+ * @package Models
+ */
 class PDOSingleton
 {
+    /**
+     * Instance unique de la connexion PDO
+     * @var PDO|null
+     */
     private static ?PDO $instance = null;
 
+    /**
+     * Constructeur privé pour empêcher l'instanciation externe
+     */
     private function __construct() {}
+
+    /**
+     * Empêche le clonage de l'instance singleton
+     * @return void
+     */
     private function __clone(): void {}
+
+    /**
+     * Empêche la désérialisation de l'instance singleton
+     * @return void
+     */
     private function __wakeup(): void {}
 
+    /**
+     * Retourne l'instance unique de PDO. La crée si elle n'existe pas encore.
+     * @return PDO L'instance unique de la connexion à la base de données
+     * @throws RuntimeException Si la connexion à la base de données échoue
+     */
     public static function getInstance(): PDO
     {
         if (self::$instance === null) {
