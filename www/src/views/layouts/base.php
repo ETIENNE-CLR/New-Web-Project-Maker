@@ -1,9 +1,10 @@
 <?php
 
 use Controllers\SiteController;
+use Controllers\LanguageController;
 ?>
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="<?= LanguageController::getLanguage(true) ?>">
 
 <head>
     <meta charset="UTF-8">
