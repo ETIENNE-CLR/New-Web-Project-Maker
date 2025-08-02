@@ -13,8 +13,15 @@ L'idée est simple :
 ### Structure Git
 1. Cloner ce dépôt :
     ```bash
-    git clone https://github.com/ETIENNE-CLR/New-Web-Project-Maker.git mon-nouveau-projet/
-    cd mon-nouveau-projet/
+    git clone https://github.com/ETIENNE-CLR/New-Web-Project-Maker.git
+    ```
+
+2. Renommer le projet :
+    ```bash
+    mv New-Web-Project-Maker/ Mon-Projet/
+    ```
+    ```bash
+    cd Mon-Projet/
     ```
 
 2. Changer l'URL du repo **important** :<br>
