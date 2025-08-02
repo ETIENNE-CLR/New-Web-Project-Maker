@@ -3,6 +3,8 @@
 use Dotenv\Dotenv;
 use Slim\Factory\AppFactory;
 use Controllers\LanguageController;
+use Controllers\SiteController;
+use Models\PDOSingleton;
 
 // Chargement des classes avec Composer
 require __DIR__ . '/../vendor/autoload.php';
@@ -18,23 +20,25 @@ $app = AppFactory::create();
 $app->addErrorMiddleware(true, true, true);
 $app->addBodyParsingMiddleware();
 
-/*
-// Multi-langues
+// Création de la session
 session_start();
-if (isset($_GET['lang'])) {
-    LanguageController::setLanguage($_GET['lang']);
-}
 
-// Définition de la langue
-$lg = LanguageController::getLanguage();
-$charset = LanguageController::CHARSET;
-$locale = "$lg.$charset";
-putenv("LC_ALL=$locale");
-setlocale(LC_ALL, $locale);
-bindtextdomain('messages', __DIR__ . '/../locales');
-bind_textdomain_codeset('messages', $charset);
-textdomain('messages');
-*/
+// Multi-langues
+if (SiteController::testBDDConnexion()) {
+    if (isset($_GET['lang'])) {
+        LanguageController::setLanguage($_GET['lang']);
+    }
+
+    // Définition de la langue
+    $lg = LanguageController::getLanguage();
+    $charset = LanguageController::CHARSET;
+    $locale = "$lg.$charset";
+    putenv("LC_ALL=$locale");
+    setlocale(LC_ALL, $locale);
+    bindtextdomain('messages', __DIR__ . '/../locales');
+    bind_textdomain_codeset('messages', $charset);
+    textdomain('messages');
+}
 
 // Définir les routes
 require __DIR__ . '/../src/routes/web.php';

@@ -2,9 +2,11 @@
 
 use Controllers\SiteController;
 use Controllers\LanguageController;
+
+$lang = (SiteController::testBDDConnexion()) ? LanguageController::getLanguage(true) : 'fr' ;
 ?>
 <!DOCTYPE html>
-<html lang="<?= LanguageController::getLanguage(true) ?>">
+<html lang="<?= $lang ?>">
 
 <head>
     <meta charset="UTF-8">

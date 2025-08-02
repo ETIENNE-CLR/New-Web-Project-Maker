@@ -42,10 +42,11 @@ class PDOSingleton
 
     /**
      * Retourne l'instance unique de PDO. La crée si elle n'existe pas encore.
+     * @param bool Booléan qui sert à dire si c'est un test de connexion ou pas.
      * @return PDO L'instance unique de la connexion à la base de données
      * @throws RuntimeException Si la connexion à la base de données échoue
      */
-    public static function getInstance(): PDO
+    public static function getInstance(bool $testConnexion = false): PDO|null
     {
         if (self::$instance === null) {
             try {
@@ -61,11 +62,14 @@ class PDOSingleton
                     PDO::ATTR_EMULATE_PREPARES => false
                 ]);
             } catch (PDOException $e) {
-                error_log($e->getMessage());
-                throw new RuntimeException('Erreur de connexion à la base de données.');
+                if ($testConnexion) {
+                    return null;
+                } else {
+                    error_log($e->getMessage());
+                    throw new RuntimeException('Erreur de connexion à la base de données.');
+                }
             }
         }
-
         return self::$instance;
     }
 }

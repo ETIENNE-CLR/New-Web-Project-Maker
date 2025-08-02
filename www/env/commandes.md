@@ -1,10 +1,10 @@
-<!-- Texte à remplacer : 'test.site.maker' -->
+<!-- Texte à remplacer : 'new.project.maker' -->
 
 ## Commandes à executer pour le vhost
 ### Activer le vhost
 Copier le fichier `*.conf` présent dans ce répertoire dans le dossier `/etc/apache2/sites-available`.
 ```bash
-sudo cp www/env/test.site.maker.conf /etc/apache2/sites-available
+sudo cp www/env/new.project.maker.conf /etc/apache2/sites-available
 ```
 
 Avant d'activer le vhost, il faut s'assurer qu'il n'y ait pas d'erreur de syntaxe dans le fichier (petite vérification). :
@@ -17,7 +17,7 @@ sudo apache2ctl -t
 > ```
 Ensuite activez le vhost grâce à cette commande :
 ```bash
-sudo a2ensite test.site.maker.conf
+sudo a2ensite new.project.maker.conf
 ```
 
 Si la syntaxe est ok, rechargez Apache2 :
@@ -30,9 +30,9 @@ Pour ce faire ouvrez le bloc-notes **en tant qu'administrateur**, puis ouvrez le
 
 Copiez-y les lignes suivantes en fin de fichier :
 ```
-127.0.0.1       test.site.maker
-::1             test.site.maker
+127.0.0.1       new.project.maker
+::1             new.project.maker
 ```
 
 ### Accéder au site
-En vous rendant sur <a href="http://test.site.maker/"><button>test.site.maker/</button></a>.
+En vous rendant sur <a href="http://new.project.maker/"><button>new.project.maker/</button></a>.

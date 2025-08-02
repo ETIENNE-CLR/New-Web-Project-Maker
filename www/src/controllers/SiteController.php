@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Models\PDOSingleton;
 use Slim\Views\PhpRenderer;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -12,6 +13,15 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class SiteController
 {
+    /**
+     * Test la connexion avec la bdd
+     * @return bool True si la connexion marche, False si ça marche pas
+     */
+    public static function testBDDConnexion(): bool
+    {
+        return (PDOSingleton::getInstance(true) != null);
+    }
+
     /**
      * Génère dynamiquement un chemin relatif (`../`) permettant de revenir jusqu'au dossier `public/`.
      * Ce chemin est utile pour les liens relatifs dans les vues, afin qu'ils restent valides quelle que soit la profondeur de l'URL.

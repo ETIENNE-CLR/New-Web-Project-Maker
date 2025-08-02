@@ -47,8 +47,8 @@ L'idée est simple :
     Si vous allez utiliser **une base de donnée,** vous allez devoir créer le fichier `.env` **à la racine** du projet web :
     ```bash
     cd www
-    touch .env
     sudo vi .env
+    cd ..
     ```
     Dans ce fichier `.env`, insérez le contenu ci-dessous :
     ```env
