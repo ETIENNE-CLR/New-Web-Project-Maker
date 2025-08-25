@@ -5,8 +5,8 @@ eval "$(ssh-agent -s)"
 
 # Choisir la bonne clé SSH
 cleSSH="Cle_github"     # Clé de mon PC portable
-cleSSH="id_rsa"         # Clé de mon PC gaming
-cleSSH="etienneclr_key" # Clé du PC de l'école
+cleSSH="cfpt_key"       # Clé du PC de l'école
+cleSSH="gitkey"         # Clé de mon PC gaming
 
 # Ajouter la clé à l'agent
 ssh-add ~/.ssh/$cleSSH
