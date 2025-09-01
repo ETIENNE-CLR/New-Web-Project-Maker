@@ -10,6 +10,8 @@ use Models\PDOSingleton;
  *
  * Fournit des méthodes de base pour manipuler les enregistrements en base de données
  * selon le modèle Active Record (CRUD). Elle doit être étendue par chaque modèle métier.
+ * 
+ * Classe généré par ChatGPT
  *
  * @package Models
  */
