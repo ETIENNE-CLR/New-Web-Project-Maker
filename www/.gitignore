@@ -1,0 +1,7 @@
+# Composer files
+**/vendor/
+*.lock
+
+# Generated files
+# **.env
+**.conf

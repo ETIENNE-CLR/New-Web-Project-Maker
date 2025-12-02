@@ -1,11 +1,34 @@
-**/vendor/
-
+# VSCode files
 **/.vs/
-
 **/.vscode/
 
-*Zone.Identifier*
+# Personnal / WSL files
+**/~$
+**desktop.ini
+**Zone.Identifier
 
-*desktop.ini*
+# LaTeX files
+**.aux
+**.fdb_latexmk
+**.fls
+**.log
+**.out
+**.synctex.gz
+**.toc
+**.nav
+**.snm
+**.vrb
 
-*.env*
+# Linux trash
+.Trash-*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop

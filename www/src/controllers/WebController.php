@@ -11,7 +11,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  * Contrôleur principal du site.
  * Gère l'affichage des pages web et fournit des outils utilitaires pour adapter les chemins relatifs selon la profondeur d'URL.
  */
-class SiteController
+class WebController
 {
     /**
      * Test la connexion avec la bdd
@@ -47,10 +47,10 @@ class SiteController
      */
     public function home(Request $request, Response $response): Response
     {
-        // Définir les variables disponibles dans la vue
+        // Affichage de la vue avec le layout
         $dataLayout = ['title' => 'New Web Project Maker'];
-        $phpView = new PhpRenderer(__DIR__ . '/../views', $dataLayout);
-        $phpView->setLayout("layouts/base.php");
+        $phpView = new PhpRenderer(ROOT_PATH . 'src/views', $dataLayout);
+        $phpView->setLayout('layouts/empty.php');
         return $phpView->render($response, 'home.php');
     }
 }

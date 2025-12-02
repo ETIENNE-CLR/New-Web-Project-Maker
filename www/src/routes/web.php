@@ -1,6 +1,10 @@
 <?php
 
-use Controllers\SiteController;
+use Controllers\WebController;
 
-// Pages de base
-$app->get('/', [SiteController::class, 'home']);
+//-----------------------------------------------------
+// Routes de la vue web
+//-----------------------------------------------------
+
+// Routes
+$app->get('/', [WebController::class, 'home']);

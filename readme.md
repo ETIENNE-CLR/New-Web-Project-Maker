@@ -43,26 +43,9 @@ L'idée est simple :
     composer install
     cd ..
     ```
-5. **IMPORTANT !!**<br>
-    Si vous allez utiliser **une base de donnée,** vous allez devoir créer le fichier `.env` **à la racine** du projet web :
+5. Recommittez les changements !
     ```bash
-    cd www
-    sudo vi .env
-    cd ..
-    ```
-    Dans ce fichier `.env`, insérez le contenu ci-dessous :
-    ```env
-    DB_HOST=localhost
-    DB_NAME=ma_base
-    DB_USER=root
-    DB_PASS=Super
-    DB_CHARSET=utf8mb4
-    ```
-    > Bien sûr, changez les informations de *votre Base de Donnée* pour que cela convienne à votre environnement
-
-6. Recommittez les changements !
-    ```bash
-    bash git/commit.sh "intialisation de mon fichier `.env` pour la bdd"
+    git add . && git commit -m "intialisation de mon fichier `.env` pour la bdd"
     ```
 
 
