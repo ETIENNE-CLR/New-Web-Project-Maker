@@ -1,0 +1,45 @@
+# New Web Project Maker
+Base de projet PHP Slim avec API pour démarrer rapidement un nouveau site web
+
+## Présentation
+Ce dépôt est une **base de projet web** prête à l'emploi, construite autour du micro-framework [Slim PHP](https://www.slimframework.com/). 
+
+L'idée est simple :  
+- Quand tu veux créer un nouveau site ou une API en PHP Slim, tu clones ce repo
+- Puis tu changes l'URL du dépôt distant (origin) pour ton propre repo
+- Ensuite tu commences à développer ton projet rapidement sans repartir de zéro
+
+## Prérequis
+* PHP 7.4 ou supérieur
+* Composer (si vous n'avez pas composer, executez `bash www/env/composer_installer.sh`)
+* Serveur web local (Apache)
+
+## Installation
+1. 📦Clonez le repo :
+    ```bash
+    git clone git@github.com:ETIENNE-CLR/New-Web-Project-Maker.git
+    ```
+
+2. 📥 Initialisez composer :
+    ```bash
+    cd www
+    composer install
+    composer update
+    cd ..
+    ```
+
+3. ⚙️ Créez le fichier `.env` (pour les variables de la BDD/JWT) :
+    ```bash
+    cd www
+    echo -e "DB_HOST=localhost\nDB_NAME=xxxxx\nDB_USER=xxxxx\nDB_PASS=xxxxx\nDB_CHARSET=utf8mb4\nJWT_SECRET=xxxxx\nDEV_MOD=false\n" > .env
+    cd ..
+    ```
+
+## Contenu
+- Framework Slim configuré et prêt  
+- Structure basique MVC adaptée  
+- Exemple d'API REST intégrée  
+
+--- 
+
+Bonne création de projets web rapides et efficaces ! 🚀
