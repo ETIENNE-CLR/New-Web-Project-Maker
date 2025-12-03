@@ -35,6 +35,17 @@ L'idée est simple :
     cd ..
     ```
 
+4. ✏️ Si vous prévoyez de faire un vhost, avant de le build avec `www/env/vhostMaker.sh`, changer le nom de la variable `APP_NAME` par le nom de votre application
+    ```bash
+    APP_NAME="new-web-project-maker" # ici
+    ```
+
+5. 🔃 Changer le readme :
+    ```bash
+    rm README.md
+    mv README copy.md README.md
+    ```
+
 ## Contenu
 - Framework Slim configuré et prêt  
 - Structure basique MVC adaptée  
