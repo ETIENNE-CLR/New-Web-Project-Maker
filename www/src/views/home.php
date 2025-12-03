@@ -1,7 +1,8 @@
 <?php
 
-use Controllers\WebController; ?>
-<link rel="stylesheet" href="<?= WebController::getAddonPath() ?>code/style.css">
+use Controllers\WebController;
+?>
+<link rel="stylesheet" href="<?= WebController::getAddonPath() ?>css/style.css">
 
 <div class="container text-white text-center py-5">
     <!-- Hero section -->
