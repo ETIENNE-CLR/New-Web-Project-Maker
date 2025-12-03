@@ -1,5 +1,4 @@
-export const BASE_URL_API = 'http://new-web-project-maker/';
-export const LS_JWT_KEY = 'jwt_token';
+import { LS_JWT_KEY } from "./var.js";
 
 /**
  * Classe qui permet de faire les fetchs CRUD
