@@ -29,4 +29,6 @@ sudo cp $WWW_DIR/env/$VHOST_FILENAME /etc/apache2/sites-available
 sudo apache2ctl -t
 sudo a2ensite $VHOST_FILENAME
 sudo service apache2 reload
-echo "✅ Le VirtualHost pour $APP_NAME a été créé et activé avec succès. Accessible via http://$APP_NAME"
+
+echo "✅ Le VirtualHost pour $APP_NAME a été créé et activé avec succès."
+echo "Accessible avec : http://$APP_NAME"

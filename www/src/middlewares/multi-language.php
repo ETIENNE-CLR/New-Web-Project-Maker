@@ -1,8 +1,8 @@
 <?php
 use Controllers\LanguageController;
-use Controllers\SiteController;
+use Controllers\WebController;
 
-if (SiteController::testBDDConnexion()) {
+if (WebController::testBDDConnexion()) {
     if (isset($_GET['lang'])) {
         LanguageController::setLanguage($_GET['lang']);
     }

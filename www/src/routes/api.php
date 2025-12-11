@@ -6,9 +6,14 @@ use Controllers\ApiController;
 // Routes de l'API
 //-----------------------------------------------------
 
-// Home
-$app->get('/api[/]', [ApiController::class, ApiController::API_FUNCTION]);
+// Route home
+$homeRoute = '/';
+$app->group($homeRoute, function () use ($app, $homeRoute) {
+    $app->map(['GET', 'POST', 'PUT', 'DELETE'], $homeRoute, [ApiController::class, ApiController::API_FUNCTION]);
+});
 
-// Routes
-$app->get('/api/{' . ApiController::SPECIFIC_TABLE_ARGUMENT_NAME . '}', [ApiController::class, ApiController::API_FUNCTION]);
-$app->post('/api/{' . ApiController::SPECIFIC_TABLE_ARGUMENT_NAME . '}', [ApiController::class, ApiController::API_FUNCTION]);
+// Les routes
+$route = '/{' . ApiController::SPECIFIC_TABLE_ARGUMENT_NAME . '}';
+$app->group($route, function () use ($app, $route) {
+    $app->map(['GET', 'POST', 'PUT', 'DELETE'], $route, [ApiController::class, ApiController::API_FUNCTION]);
+});

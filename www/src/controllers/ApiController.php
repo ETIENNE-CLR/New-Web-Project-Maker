@@ -15,8 +15,19 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class ApiController
 {
+    /**
+     * Nom de la fonction pour le point d'entré de l'API.
+     */
     public const string API_FUNCTION = 'api';
+
+    /**
+     * Nom de l'argument pour l'API.
+     */
     public const string SPECIFIC_TABLE_ARGUMENT_NAME = 'table';
+
+    /**
+     * Instance de la classe logger pour gérer tout ce qui est connexion
+     */
     private Logger $logger;
 
     /**
@@ -159,7 +170,21 @@ class ApiController
      */
     private function put(Request $request, array $args): array
     {
-        return []; // tmp
+        $param = $args[self::SPECIFIC_TABLE_ARGUMENT_NAME];
+        $body = $request->getParsedBody();
+        if (empty($body)) {
+            http_response_code(HttpCodeHelper::BAD_REQUEST);
+            return ["warning" => "Aucune données n'a été envoyées"];
+        }
+
+        switch ($param) {
+            default:
+                http_response_code(HttpCodeHelper::BAD_REQUEST);
+                return [
+                    "error" => "Mauvais paramètre spécifié !",
+                    "details" => "Le chemin avec le paramètre joint n'est pas valide !"
+                ];
+        }
     }
 
     /**

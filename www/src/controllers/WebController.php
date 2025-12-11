@@ -39,6 +39,15 @@ class WebController
     }
 
     /**
+     * Méthode statique qui permet de dire si nous sommes en mode dev
+     * @return bool Si nous sommes en mode dev ou pas
+     */
+    public static function areWeInDevMode(): bool
+    {
+        return filter_var($_ENV['DEV_MOD'] ?? false, FILTER_VALIDATE_BOOL);
+    }
+
+    /**
      * Affiche la page d'accueil du site (`home.php`) avec le layout de base.
      * Utilise le moteur de rendu PhpRenderer de Slim pour afficher la vue avec un layout commun.
      * @param Request $request L'objet de requête HTTP (inutilisé ici mais nécessaire pour l'interface)

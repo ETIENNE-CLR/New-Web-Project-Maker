@@ -2,7 +2,9 @@
 
 use Slim\Factory\AppFactory;
 
-define('ROOT_PATH', __DIR__ . '/../');
+// Config
+date_default_timezone_set('Europe/Paris');
+define('ROOT_PATH', __DIR__ . '/../'); // Prend à partir de `www/`
 require ROOT_PATH . 'vendor/autoload.php';
 
 // Créer l'application Slim
@@ -12,7 +14,6 @@ $app->addBodyParsingMiddleware();
 // Initialisation middlewares et autres configurations
 require ROOT_PATH . 'src/middlewares/env.php';
 require ROOT_PATH . 'src/middlewares/error-handling.php';
-// require ROOT_PATH . 'src/middlewares/multi-language.php';
 
 // Création de la session
 session_start();

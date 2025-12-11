@@ -1,5 +1,6 @@
 <?php
 
+use Controllers\WebController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\PhpRenderer;
@@ -7,14 +8,7 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 use Throwable;
 
-/**
- * Gestion des erreurs avec Slim + Whoops
- * - Mode DEV  : belles pages d’erreurs Whoops
- * - Mode PROD : page 500 propre sans infos sensibles
- */
-$isDevMode = filter_var($_ENV['DEV_MOD'] ?? false, FILTER_VALIDATE_BOOL);
-
-if ($isDevMode) {
+if (WebController::areWeInDevMode()) {
     // --- MODE DÉVELOPPEMENT : WHOOPS ---
     $whoops = new Run();
     $whoops->pushHandler(new PrettyPageHandler());
