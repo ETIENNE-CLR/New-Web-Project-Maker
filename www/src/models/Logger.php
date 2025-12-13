@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace Models;
 
 use Exception;
 use Firebase\JWT\JWT;
@@ -95,7 +95,10 @@ class Logger
 
         // rememberMe
         if ($rememberMe) {
-            $messages["jwt"] = self::generateNewJWT($user->id);
+            $messages["jwt"] = self::generateNewJWT([
+                'userId' => $user->id,
+                'username' => $user->username,
+            ]);
         } else {
             $_SESSION[self::SESSION_USER_KEY] = $user->id;
         }
@@ -139,7 +142,10 @@ class Logger
 
         // rememberMe
         if ($rememberMe) {
-            $messages["jwt"] = self::generateNewJWT($newUser->id);
+            $messages["jwt"] = self::generateNewJWT([
+                'userId' => $newUser->id,
+                'username' => $newUser->username,
+            ]);
         } else {
             $_SESSION[self::SESSION_USER_KEY] = $newUser->id;
         }
@@ -148,40 +154,33 @@ class Logger
 
     /**
      * Fonction qui va générer un Json Web Token qui comprendra l'id de l'utilisateur connecté
-     * @param int $idUser Id de l'utilsateur qu'on doit connecter
+     * @return array les données qu'on veut sauvegarder
      * @return string le JWT crypté
      */
-    private static function generateNewJWT(int $idUser): string
+    public static function generateNewJWT(array $data = [], int $nbDays = 61): string
     {
         // Init
-        // $user = User::read($idUser);
-        $user = new stdClass();
         $issuedAt = time();
-        $nbDay = 61; // 2 mois
-        $expirationTime = ($issuedAt + 3600) * 24 * $nbDay;
+        $expirationTime = ($issuedAt + 3600) * 24 * $nbDays;
         $payload = [
             'iat' => $issuedAt,
             'exp' => $expirationTime,
-            'data' => [
-                'userId' => $user->id,
-                'username' => $user->username,
-            ]
+            'data' => $data
         ];
 
         // Générer le JWT
-        $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], self::CRYPT_ALGO);
-        return $jwt;
+        return JWT::encode($payload, $_ENV['JWT_SECRET'], self::CRYPT_ALGO);
     }
 
     /**
      * Fonction qui va vérifier un Json Web Token
-     * @param $headers en-tête de la requête API
+     * @param array $headers en-tête de la requête API
      * @param bool $testMode option qui empêche la génération des erreurs (par défaut sur `false`)
      */
-    public static function checkJWT($headers, bool $testMode = false): false|stdClass
+    public static function checkJWT(array $headers, bool $testMode = false): false|stdClass
     {
+        // Valider le JWT
         $authHeader = $headers['Authorization'] ?? '';
-
         if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
             if (!$testMode) {
                 http_response_code(HttpCodeHelper::UNPROCESSABLE_ENTITY);
@@ -192,6 +191,7 @@ class Logger
             }
         }
 
+        // Decoder le JWT
         $jwt = $matches[1];
         try {
             $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], self::CRYPT_ALGO));

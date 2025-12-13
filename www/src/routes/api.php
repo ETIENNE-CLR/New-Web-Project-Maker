@@ -7,7 +7,6 @@ use Controllers\ApiController;
 //-----------------------------------------------------
 
 // Route home
-// Route home
 $homeRoute = '/api';
 $app->group($homeRoute, function () use ($app, $homeRoute) {
     $app->map(['GET', 'POST', 'PUT', 'DELETE'], $homeRoute, [ApiController::class, ApiController::API_FUNCTION]);

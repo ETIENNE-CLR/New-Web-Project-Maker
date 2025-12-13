@@ -49,7 +49,6 @@ export class RequestSender {
             const data = await response.json();
 
             if (response.ok) {
-                console.log("Succès :", data);
                 return data;
             } else {
                 console.error("Erreur :", data);

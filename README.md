@@ -28,19 +28,12 @@ L'idée est simple :
     cd ..
     ```
 
-3. ⚙️ Créez le fichier `.env` (pour les variables de la BDD/JWT) :
-    ```bash
-    cd www
-    echo -e "DB_HOST=localhost\nDB_NAME=xxxxx\nDB_USER=xxxxx\nDB_PASS=xxxxx\nDB_CHARSET=utf8mb4\nJWT_SECRET=xxxxx\nDEV_MOD=false\n" > .env
-    cd ..
-    ```
-
-4. ✏️ Si vous prévoyez de faire un vhost, avant de le build avec `www/env/vhostMaker.sh`, changer le nom de la variable `APP_NAME` par le nom de votre application
+3. ✏️ Si vous prévoyez de faire un vhost, avant de le build avec `www/env/vhostMaker.sh`, changer le nom de la variable `APP_NAME` par le nom de votre application
     ```bash
     APP_NAME="new-web-project-maker" # ici
     ```
 
-5. 🔃 Changer le readme :
+4. 🔃 Changer le readme :
     ```bash
     mv 'README copy.md' 'README.md'
     ```

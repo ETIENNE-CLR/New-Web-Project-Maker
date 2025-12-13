@@ -35,4 +35,4 @@ echo "Accessible avec : http://$APP_NAME"
 
 # Mise à jour du fichier js
 VAR_JS_FILE="$WWW_DIR/public/js/var.js"
-sed -i "s|export const BASE_URL_API = .*;|export const BASE_URL_API = httpText + '$APP_NAME';|" "$VAR_JS_FILE"
+sed -i "s|export const BASE_URL_API = .*;|export const BASE_URL_API = httpText + '$APP_NAME' + '/api';|" "$VAR_JS_FILE"
