@@ -32,3 +32,7 @@ sudo service apache2 reload
 
 echo "✅ Le VirtualHost pour $APP_NAME a été créé et activé avec succès."
 echo "Accessible avec : http://$APP_NAME"
+
+# Mise à jour du fichier js
+VAR_JS_FILE="$WWW_DIR/public/js/var.js"
+sed -i "s|export const BASE_URL_API = .*;|export const BASE_URL_API = httpText + '$APP_NAME';|" "$VAR_JS_FILE"
