@@ -42,8 +42,7 @@ L'idée est simple :
 
 5. 🔃 Changer le readme :
     ```bash
-    rm README.md
-    mv 'README copy.md'
+    mv 'README copy.md' 'README.md'
     ```
 
 ## Contenu
