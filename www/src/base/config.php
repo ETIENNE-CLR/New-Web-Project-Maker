@@ -1,7 +1,9 @@
 <?php
+// Config
 date_default_timezone_set('Europe/Paris');
-require ROOT_PATH . 'src/config/env.php';
+require ROOT_PATH . 'src/base/env.php';
 
+// Dev mode
 function isDevMode(): bool
 {
     return isset($_ENV['DEV_MOD']) && 'true' === $_ENV['DEV_MOD'];

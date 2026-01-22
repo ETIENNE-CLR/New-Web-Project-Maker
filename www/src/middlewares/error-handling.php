@@ -1,6 +1,5 @@
 <?php
 
-use Controllers\WebController;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Views\PhpRenderer;
@@ -8,7 +7,7 @@ use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 use Throwable;
 
-if (WebController::areWeInDevMode()) {
+if (isDevMode()) {
     // --- MODE DÉVELOPPEMENT : WHOOPS ---
     $whoops = new Run();
     $whoops->pushHandler(new PrettyPageHandler());

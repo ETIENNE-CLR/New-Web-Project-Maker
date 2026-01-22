@@ -44,15 +44,6 @@ class WebController
     }
 
     /**
-     * Méthode statique qui permet de dire si nous sommes en mode dev
-     * @return bool Si nous sommes en mode dev ou pas
-     */
-    public static function areWeInDevMode(): bool
-    {
-        return filter_var($_ENV['DEV_MOD'] ?? false, FILTER_VALIDATE_BOOL);
-    }
-
-    /**
      * Affiche la page d'accueil du site
      */
     public function home(Request $request, Response $response): Response
