@@ -1,9 +1,10 @@
 <?php
 date_default_timezone_set('Europe/Paris');
+require ROOT_PATH . 'src/config/env.php';
 
 function isDevMode(): bool
 {
-    return isset($_ENV['DEV_MOD']) && true === $_ENV['DEV_MOD'];
+    return isset($_ENV['DEV_MOD']) && 'true' === $_ENV['DEV_MOD'];
 }
 
 // Affichage des erreurs

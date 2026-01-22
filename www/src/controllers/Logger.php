@@ -1,11 +1,12 @@
 <?php
 
-namespace Models;
+namespace Controllers;
 
 use Exception;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use Models\HttpCodeHelper;
+use Psr\Http\Message\ResponseInterface as Response;
 use stdClass;
 
 /**
@@ -27,44 +28,47 @@ class Logger
     /**
      * Méthode qui permet de récupérer le JWR
      * Emis par l'application
+     * @param Response $response La réponse HTTP à retourner
      * @return stdClass|false Le tableau associatif sous forme de classe s'il est valide. False s'il ne l'est pas
      */
-    public static function getToken(): stdClass|false
+    public static function getToken(Response $response): stdClass|false
     {
-        return self::checkJWT(getallheaders(), true);
+        return self::checkJWT($response, true);
     }
 
     /**
      * Récupérer l'ID de l'utilisateur connécté depuis le token
+     * @param Response $response La réponse HTTP à retourner
      * @return int|null L'id INT de l'utilisateur. Null s'il n'a pas été récupéré
      */
-    public static function getUserId(): int|null
+    public static function getUserId(Response $response): int|string|null
     {
-        $token = self::getToken();
-        $idSession = $_SESSION[self::SESSION_USER_KEY] ?? null;
+        $token = self::getToken($response);
         return ($token !== false)
-            ? ($token->data->userId)
-            : (isset($idSession) ? $idSession : null);
+            ? $token->data->id // A revérifier !
+            : null;
     }
 
-    /**
-     * Méthode pour récupérer l'objet l'utilisateur
-     * @return User|null une instance User s'il a été récupérer. Null s'il n'a pas été récupéré
-     */
-    // public static function getUser(): User|null
+    // /**
+    //  * Méthode pour récupérer l'objet l'utilisateur
+    //  * @param Response $response La réponse HTTP à retourner
+    //  * @return User|null une instance User s'il a été récupérer. Null s'il n'a pas été récupéré
+    //  */
+    // public static function getUser(Response $response): User|null
     // {
-    //     $id = self::getUserId();
+    //     $id = self::getUserId($response);
     //     return ($id !== null) ? User::read($id) : null;
     // }
 
     /**
      * Fonction qui va permettre de se logger à un compte utilisateur
+     * @param Response $response La réponse HTTP à retourner
      * @param string $username Nom de l'utilsateur qu'on doit connecter
      * @param string $password Mot de passe de l'utilsateur qu'on doit connecter
      * @param bool $rememberMe Option qui sert à dire s'il faut garder la connexion
      * @return array tableau qui comprendra tous les messages de retour
      */
-    public function login(string $username, string $password, bool $rememberMe): array
+    public function login(Response $response, string $username, string $password, bool $rememberMe): array
     {
         $messages = [];
 
@@ -75,7 +79,7 @@ class Logger
             return $u->username === $username;
         });
         if (!isset($user)) {
-            http_response_code(HttpCodeHelper::NOT_FOUND);
+            $response->withStatus(HttpCodeHelper::NOT_FOUND);
             $messages['success'] = false;
             $messages['details'][] = "L'utilisateur n'existe pas !";
             return $messages;
@@ -83,14 +87,14 @@ class Logger
 
         // Verifier le mot de passe
         if (!password_verify($password, $user->password)) {
-            http_response_code(HttpCodeHelper::UNPROCESSABLE_ENTITY);
+            $response->withStatus(HttpCodeHelper::UNPROCESSABLE_ENTITY);
             $messages['success'] = false;
             $messages['details'][] = "Le mot de passe ne correspond pas !";
             return $messages;
         }
 
         // Authentification réussie
-        http_response_code(HttpCodeHelper::OK);
+        $response->withStatus(HttpCodeHelper::OK);
         $messages['success'] = true;
 
         // rememberMe
@@ -107,12 +111,13 @@ class Logger
 
     /**
      * Fonction qui va permettre de s'enregistrer un compte utilisateur
+     * @param Response $response La réponse HTTP à retourner
      * @param string $username Nom de l'utilsateur qu'on doit connecter
      * @param string $password Mot de passe de l'utilsateur qu'on doit connecter
      * @param bool $rememberMe Option qui sert à dire s'il faut garder la connexion
      * @return array tableau qui comprendra tous les messages de retour
      */
-    public function register(string $username, string $password, bool $rememberMe): array
+    public function register(Response $response, string $username, string $password, bool $rememberMe): array
     {
         $messages = [];
 
@@ -123,7 +128,7 @@ class Logger
             return $u->username === $username;
         });
         if (isset($user)) {
-            http_response_code(HttpCodeHelper::FORBIDDEN);
+            $response->withStatus(HttpCodeHelper::FORBIDDEN);
             $messages['success'] = false;
             $messages['errorMessage'][] = "L'utilisateur existe déjà !";
             return $messages;
@@ -135,7 +140,7 @@ class Logger
         $newUser->username = $username;
         $newUser->password = password_hash($password, PASSWORD_DEFAULT);
         // $newUser->save();
-        http_response_code(HttpCodeHelper::OK);
+        $response->withStatus(HttpCodeHelper::OK);
         $messages[] = [
             "success" => "true",
         ];
@@ -153,9 +158,10 @@ class Logger
     }
 
     /**
-     * Fonction qui va générer un Json Web Token qui comprendra l'id de l'utilisateur connecté
-     * @return array les données qu'on veut sauvegarder
-     * @return string le JWT crypté
+     * Fonction qui va générer un Json Web Token
+     * @param array $data les données qu'on veut sauvegarder
+     * @param int $nbDays le nombre de jours que le jwt sera valide
+     * @return string le token généré
      */
     public static function generateNewJWT(array $data = [], int $nbDays = 61): string
     {
@@ -174,16 +180,18 @@ class Logger
 
     /**
      * Fonction qui va vérifier un Json Web Token
-     * @param array $headers en-tête de la requête API
+     * @param Response $response La réponse HTTP à retourner
      * @param bool $testMode option qui empêche la génération des erreurs (par défaut sur `false`)
+     * @return false|stdClass le token ou false
      */
-    public static function checkJWT(array $headers, bool $testMode = false): false|stdClass
+    public static function checkJWT(Response $response, bool $testMode = false): false|stdClass
     {
-        // Valider le JWT
+        $headers = getallheaders();
         $authHeader = $headers['Authorization'] ?? '';
+
         if (!preg_match('/Bearer\s(\S+)/', $authHeader, $matches)) {
             if (!$testMode) {
-                http_response_code(HttpCodeHelper::UNPROCESSABLE_ENTITY);
+                $response->withStatus(HttpCodeHelper::UNPROCESSABLE_ENTITY);
                 throw new Exception('Authorization header manquant ou invalide', 1);
                 die();
             } else {
@@ -191,19 +199,18 @@ class Logger
             }
         }
 
-        // Decoder le JWT
         $jwt = $matches[1];
         try {
             $decoded = JWT::decode($jwt, new Key($_ENV['JWT_SECRET'], self::CRYPT_ALGO));
-            $userId = $decoded->data->userId ?? null;
+            $data = $decoded->data ?? null;
 
-            if (!$userId) {
-                http_response_code(HttpCodeHelper::FORBIDDEN);
+            if (!isset($data)) {
+                $response->withStatus(HttpCodeHelper::FORBIDDEN);
                 exit;
             }
             return $decoded;
         } catch (Exception $e) {
-            http_response_code(HttpCodeHelper::UNAUTHORIZED);
+            $response->withStatus(HttpCodeHelper::UNAUTHORIZED);
             return false;
         }
     }

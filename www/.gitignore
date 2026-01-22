@@ -1,6 +1,6 @@
 # Composer files
 **/vendor/
-*.lock
+**.lock
 
 # Dev files
 .php-cs-fixer.dist.php

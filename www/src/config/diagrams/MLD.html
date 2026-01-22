@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+        body {
+            margin: 0;
+            width: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            border: 1px solid black;
+            border-radius: 4px;
+            min-width: 45%;
+            width: auto;
+            max-width: 65%;
+            padding: 2%;
+            overflow: auto;
+        }
+
+        .row {
+            margin-bottom: 1em;
+        }
+
+        .tablename {
+            /* text-transform: uppercase; */
+        }
+
+        .primaryKey {
+            text-decoration: underline;
+        }
+
+        .secondaryKey {
+            color: #FF8000;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+    </div>
+</body>
+<script>
+    // Au chargement de la page...
+    document.addEventListener('DOMContentLoaded', () => {
+        // Init
+        const APP_NAME = `Nom de l'app`;
+        const JSON_MLD = {
+            "NomTable": [
+                '_id_', 'champ'
+            ]
+        };
+        const container = document.getElementById('container');
+        document.title = `MLD - ${APP_NAME}`;
+
+        // Displayer
+        for (const tablename of Object.keys(JSON_MLD)) {
+            // Init
+            const JSON_TABLEVALUE = JSON_MLD[tablename] ?? [];
+            const row = document.createElement('div');
+            row.classList.add('row');
+
+            // Nom de table
+            row.innerHTML = `<span class="tablename">${tablename}</span>`;
+            row.innerHTML += ` (`;
+
+            // Parcourir les champs de la table
+            for (let i = 0; i < JSON_TABLEVALUE.length; i++) {
+                // Init
+                const champ = JSON_TABLEVALUE[i] ?? [];
+                const span = document.createElement('span');
+                let textChamp = '';
+
+                if (typeof champ !== "string") throw new Error(`La valeur ${champ} n'est pas un string !`);
+
+                // Gestion clé primaire
+                if (champ.startsWith('_') && champ.endsWith('_')) {
+                    span.classList.add('primaryKey');
+                }
+                
+                // Gestion clé secondaire
+                if (champ.startsWith('#')) {
+                    span.classList.add('secondaryKey');
+                }
+
+                // Insert
+                span.innerText = champ.replaceAll('_', '');
+                row.appendChild(span);
+
+                // Virgule
+                if (i + 1 < JSON_TABLEVALUE.length) {
+                    row.innerHTML += ', ';
+                }
+            }
+            row.innerHTML += `)`;
+            container.appendChild(row);
+        }
+    })
+</script>
+
+</html>

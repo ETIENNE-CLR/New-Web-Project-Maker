@@ -12,29 +12,45 @@ use Models\PDOSingleton;
  * selon le modèle Active Record (CRUD). Elle doit être étendue par chaque modèle métier.
  * 
  * Classe généré par ChatGPT
- *
- * @package Models
  */
 abstract class ActiveRecord implements ICRUD
 {
     /**
      * Nom de la table associée au modèle
      * Doit être défini dans la classe enfant.
-     *
-     * @var string
      */
     protected static string $table;
 
     /**
      * Identifiant unique de l'enregistrement
-     *
-     * @var int
      */
     public int $id;
 
     /**
-     * Récupère un enregistrement en base par son identifiant
+     * Associe les champs SQL à leurs classes Enum (doit être défini dans les classes enfants).
      *
+     * Exemple :
+     * ```php
+     * protected static array $enumMap = [
+     *     'rarity' => \Enums\Rarity::class,
+     *     'type'   => \Enums\Energie::class,
+     * ];
+     * ```
+     */
+    protected static array $enumMap = [];
+
+    /**
+     * Champs stockés en JSON en base (doit être défini dans les classes enfants).
+     *
+     * Exemple :
+     * ```php
+     * protected static array $jsonFields = ['energie'];
+     * ```
+     */
+    protected static array $jsonFields = [];
+
+    /**
+     * Récupère un enregistrement en base par son identifiant
      * @param int $id Identifiant du record à récupérer
      * @return static|null Instance du modèle avec les données ou null si non trouvé
      */
@@ -48,7 +64,6 @@ abstract class ActiveRecord implements ICRUD
 
     /**
      * Récupère tous les enregistrements de la table
-     *
      * @return static[] Tableau d'instances du modèle contenant tous les enregistrements
      */
     public static function readAll(): array
@@ -60,10 +75,9 @@ abstract class ActiveRecord implements ICRUD
 
     /**
      * Enregistre ou met à jour l'enregistrement courant en base de données
-     *
+     * 
      * - Si la propriété `id` n’est pas définie, un nouvel enregistrement est inséré.
      * - Sinon, l’enregistrement existant est mis à jour.
-     *
      * @return bool True si l’opération a réussi, False sinon
      */
     public function save(): bool
@@ -90,7 +104,6 @@ abstract class ActiveRecord implements ICRUD
 
     /**
      * Supprime l'enregistrement courant de la base de données
-     *
      * @return bool True si la suppression a réussi, False sinon
      */
     public function delete(): bool
@@ -103,7 +116,6 @@ abstract class ActiveRecord implements ICRUD
 
     /**
      * Crée une instance du modèle à partir d’un tableau associatif (données SQL)
-     *
      * @param array $data Données à injecter dans le modèle
      * @return static Instance du modèle remplie avec les données
      */
@@ -114,5 +126,24 @@ abstract class ActiveRecord implements ICRUD
             $instance->$key = $value;
         }
         return $instance;
+    }
+
+    /**
+     * Créé un tableau associatif à partir de l'instance active.
+     * @return array tableau associatif
+     */
+    public function toArray(): array
+    {
+        $array = [];
+        foreach (get_object_vars($this) as $key => $value) {
+            if ($value instanceof \BackedEnum) {
+                $array[$key] = $value->value;
+            } elseif (in_array($key, static::$jsonFields, true)) {
+                $array[$key] = json_encode($value, JSON_UNESCAPED_UNICODE);
+            } else {
+                $array[$key] = $value;
+            }
+        }
+        return $array;
     }
 }

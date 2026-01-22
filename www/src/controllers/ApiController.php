@@ -65,11 +65,12 @@ class ApiController
 
     /**
      * Méthode qui permet de dire s'il y a un utilisateur connecté
+     * @param Response $response La réponse HTTP à retourner
      * @return bool Si un utilisateur est connecté
      */
-    public static function userIsConnected(): bool
+    public static function userIsConnected(Response $response): bool
     {
-        return Logger::getUserId() !== null;
+        return Logger::getUserId($response) !== null;
     }
 
     /**
@@ -77,6 +78,8 @@ class ApiController
      * qui vont être retournée par l'API
      * en fonction de la méthode HTTP
      * @param string $method Méthode HTTP de la requête
+     * @param Request $request La requête HTTP entrante
+     * @param Response $response La réponse HTTP à retourner
      * @param array $args arguments de la requête
      * @return array un tableau JSON avec les données
      */
@@ -84,7 +87,7 @@ class ApiController
     {
         // Rien n'est spécifié
         if (!isset($args[self::SPECIFIC_TABLE_ARGUMENT_NAME])) {
-            http_response_code(HttpCodeHelper::OK);
+            $response->withStatus(HttpCodeHelper::OK);
             return [
                 "message" => "Bienvenue sur l'API !",
                 "details" => "Veuillez passer en paramètre ce que vous voulez recevoir."
@@ -94,19 +97,19 @@ class ApiController
         // Traitement de la méthode HTTP
         switch ($method) {
             case 'GET':
-                return $this->get($args);
+                return $this->get($response, $args);
 
             case 'POST':
-                return $this->post($request, $args);
+                return $this->post($request, $response, $args);
 
             case 'PUT':
-                return $this->put($request, $args);
+                return $this->put($request, $response, $args);
 
             case 'DELETE':
-                return $this->delete($args);
+                return $this->delete($response, $args);
 
             default:
-                http_response_code(HttpCodeHelper::BAD_REQUEST);
+                $response->withStatus(HttpCodeHelper::BAD_REQUEST);
                 return [
                     "error" => "Mauvaise méthode HTTP !",
                     "details" => "Veuillez utiliser une méthode HTTP valide (GET, POST, PUT, DELETE)"
@@ -116,22 +119,23 @@ class ApiController
 
     /**
      * Méthode pour la requête API en GET
+     * @param Response $response La réponse HTTP à retourner
      * @param array $args arguments de la requête
      * @return array un tableau JSON avec les données
      */
-    private function get(array $args): array
+    private function get(Response $response, array $args): array
     {
         $param = $args[self::SPECIFIC_TABLE_ARGUMENT_NAME];
         switch ($param) {
             case 'amIConnected':
-                $amIConnected = self::userIsConnected();
-                http_response_code($amIConnected ? HttpCodeHelper::OK : HttpCodeHelper::UNAUTHORIZED);
+                $amIConnected = self::userIsConnected($response);
+                $response->withStatus($amIConnected ? HttpCodeHelper::OK : HttpCodeHelper::UNAUTHORIZED);
                 return [
                     'yes' => $amIConnected
                 ];
 
             default:
-                http_response_code(HttpCodeHelper::BAD_REQUEST);
+                $response->withStatus(HttpCodeHelper::BAD_REQUEST);
                 return [
                     "error" => "Mauvais paramètre spécifié !",
                     "details" => "Le chemin avec le paramètre joint n'est pas valide !"
@@ -141,21 +145,23 @@ class ApiController
 
     /**
      * Méthode pour la requête API en POST
+     * @param Request $request La requête HTTP entrante
+     * @param Response $response La réponse HTTP à retourner
      * @param array $args arguments de la requête
      * @return array un tableau JSON avec les données
      */
-    private function post(Request $request, array $args): array
+    private function post(Request $request, Response $response, array $args): array
     {
         $param = $args[self::SPECIFIC_TABLE_ARGUMENT_NAME];
         $body = $request->getParsedBody();
         if (empty($body)) {
-            http_response_code(HttpCodeHelper::BAD_REQUEST);
+            $response->withStatus(HttpCodeHelper::BAD_REQUEST);
             return ["warning" => "Aucune données n'a été envoyées"];
         }
 
         switch ($param) {
             default:
-                http_response_code(HttpCodeHelper::BAD_REQUEST);
+                $response->withStatus(HttpCodeHelper::BAD_REQUEST);
                 return [
                     "error" => "Mauvais paramètre spécifié !",
                     "details" => "Le chemin avec le paramètre joint n'est pas valide !"
@@ -165,21 +171,23 @@ class ApiController
 
     /**
      * Méthode pour la requête API en PUT
+     * @param Request $request La requête HTTP entrante
+     * @param Response $response La réponse HTTP à retourner
      * @param array $args arguments de la requête
      * @return array un tableau JSON avec les données
      */
-    private function put(Request $request, array $args): array
+    private function put(Request $request, Response $response, array $args): array
     {
         $param = $args[self::SPECIFIC_TABLE_ARGUMENT_NAME];
         $body = $request->getParsedBody();
         if (empty($body)) {
-            http_response_code(HttpCodeHelper::BAD_REQUEST);
+            $response->withStatus(HttpCodeHelper::BAD_REQUEST);
             return ["warning" => "Aucune données n'a été envoyées"];
         }
 
         switch ($param) {
             default:
-                http_response_code(HttpCodeHelper::BAD_REQUEST);
+                $response->withStatus(HttpCodeHelper::BAD_REQUEST);
                 return [
                     "error" => "Mauvais paramètre spécifié !",
                     "details" => "Le chemin avec le paramètre joint n'est pas valide !"
@@ -189,11 +197,20 @@ class ApiController
 
     /**
      * Méthode pour la requête API en DELETE
+     * @param Response $response La réponse HTTP à retourner
      * @param array $args arguments de la requête
      * @return array un tableau JSON avec les données
      */
-    private function delete(array $args): array
+    private function delete(Response $response, array $args): array
     {
-        return []; // tmp
+        $param = $args[self::SPECIFIC_TABLE_ARGUMENT_NAME];
+        switch ($param) {
+            default:
+                $response->withStatus(HttpCodeHelper::BAD_REQUEST);
+                return [
+                    "error" => "Mauvais paramètre spécifié !",
+                    "details" => "Le chemin avec le paramètre joint n'est pas valide !"
+                ];
+        }
     }
 }

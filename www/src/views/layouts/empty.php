@@ -3,7 +3,8 @@
 use Controllers\WebController;
 use Controllers\LanguageController;
 
-$lang = (WebController::testBDDConnexion()) ? LanguageController::getLanguage(true) : 'fr';
+// $lang = (WebController::testBDDConnexion()) ? LanguageController::getLanguage(true) : 'fr';
+$lang = 'fr';
 ?>
 <!DOCTYPE html>
 <html lang="<?= $lang ?>">
@@ -16,8 +17,7 @@ $lang = (WebController::testBDDConnexion()) ? LanguageController::getLanguage(tr
 </head>
 
 <body>
-    <?= $content ?>
-    
+    <?= $content ?>    
     <?php require_once 'load/script.php' ?>
 </body>
 

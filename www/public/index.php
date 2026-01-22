@@ -4,7 +4,6 @@ use Slim\Factory\AppFactory;
 
 // Config
 define('ROOT_PATH', __DIR__ . '/../'); // Prend à partir de `www/`
-require ROOT_PATH . 'src/config/env.php';
 require ROOT_PATH . 'src/base/config.php';
 require ROOT_PATH . 'vendor/autoload.php';
 

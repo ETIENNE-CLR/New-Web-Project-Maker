@@ -14,6 +14,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 class WebController
 {
     /**
+     * Nom complet du jeu
+     */
+    public const string APP_NAME = "New Web Project maker";
+
+    /**
      * Test la connexion avec la bdd
      * @return bool True si la connexion marche, False si ça marche pas
      */
@@ -48,11 +53,7 @@ class WebController
     }
 
     /**
-     * Affiche la page d'accueil du site (`home.php`) avec le layout de base.
-     * Utilise le moteur de rendu PhpRenderer de Slim pour afficher la vue avec un layout commun.
-     * @param Request $request L'objet de requête HTTP (inutilisé ici mais nécessaire pour l'interface)
-     * @param Response $response L'objet de réponse HTTP
-     * @return Response La réponse contenant le rendu HTML de la page
+     * Affiche la page d'accueil du site
      */
     public function home(Request $request, Response $response): Response
     {

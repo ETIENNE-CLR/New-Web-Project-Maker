@@ -20,10 +20,15 @@ Texte
 2. 📥 Initialisez composer :
     ```bash
     cd www
-    composer install
-    composer update
+    composer install --no-dev
     cd ..
     ```
+    > Pour les dev :
+    > ```bash
+    > cd www
+    > composer install
+    > cd ..
+    > ```
 
 3. ⚙️ Créez le fichier `.env` (pour les variables de la BDD/JWT) :
     ```bash
