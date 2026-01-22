@@ -1,0 +1,47 @@
+% Informations générales du document
+\def\myauthor{Etienne Caulier, Daniel Miramontes, Myca Monney}
+\def\myemail{xxx@edu.ge.ch}
+\def\mytitle{PokéCrack}
+\def\myClass{I.DA-P4B}
+\def\mySchool{CFPT Informatique}
+\date{\today}
+
+% Packages essentiels pour le document
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr, fancyvrb}
+\usepackage{float}
+\usepackage{forest}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+\usepackage{graphicx}
+\usepackage{helvet}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{xcolor}
+
+% Choix de la police
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+% En-têtes et pieds de page
+\usepackage{lastpage}
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\mytitle}
+\fancyhead[C]{}
+\fancyhead[R]{\leftmark}
+
+\fancyfoot[L]{\myauthor}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage~/~\pageref{LastPage}}
+
+% Lignes de séparation dans les en-têtes/pieds
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Commandes personnalisés
+\newcommand{\newLine}{\vspace{0.2cm}}

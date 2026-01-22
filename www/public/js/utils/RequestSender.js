@@ -1,4 +1,5 @@
-import { LS_JWT_KEY } from "./var.js";
+import { getCookie } from "./cookies.js";
+import { JWT_KEY } from "./var.js";
 
 /**
  * Classe qui permet de faire les fetchs CRUD
@@ -15,7 +16,7 @@ export class RequestSender {
             const response = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    "Authorization": 'Bearer ' + localStorage.getItem(LS_JWT_KEY)
+                    "Authorization": 'Bearer ' + getCookie(JWT_KEY)
                 }
             });
 
@@ -41,7 +42,7 @@ export class RequestSender {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + localStorage.getItem(LS_JWT_KEY)
+                    'Authorization': 'Bearer ' + getCookie(JWT_KEY)
                 },
                 body: JSON.stringify(jsonbody),
                 credentials: "include"
@@ -49,6 +50,7 @@ export class RequestSender {
             const data = await response.json();
 
             if (response.ok) {
+                console.log("Succès :", data);
                 return data;
             } else {
                 console.error("Erreur :", data);
@@ -71,7 +73,7 @@ export class RequestSender {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + localStorage.getItem(LS_JWT_KEY)
+                    'Authorization': 'Bearer ' + getCookie(JWT_KEY)
                 },
                 body: JSON.stringify(jsonbody),
             });
@@ -96,7 +98,7 @@ export class RequestSender {
             const response = await fetch(url, {
                 method: "DELETE",
                 headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem(LS_JWT_KEY)
+                    'Authorization': 'Bearer ' + getCookie(JWT_KEY)
                 }
             });
 

@@ -60,4 +60,4 @@ Texte
 
 ## 🧑‍💻 Contributeurs
 **Équipe projet :**
-- Etienne Caulier
+- Votre nom

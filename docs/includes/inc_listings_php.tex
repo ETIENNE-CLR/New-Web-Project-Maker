@@ -1,0 +1,72 @@
+% Importation des packages nécessaires
+\usepackage{listingsutf8}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{accsupp}
+
+% Définition des couleurs
+\definecolor{lightgray}{gray}{0.98}
+\definecolor{dkgreen}{rgb}{0,0.6,0} % Identifiants et variables
+\definecolor{dkblue}{rgb}{0,0,0.8} % Mots-clés
+\definecolor{red}{rgb}{0.8,0,0} % Chaînes de caractères
+\definecolor{gray}{rgb}{0.5,0.5,0.5} % Commentaires
+\definecolor{purple}{rgb}{0.58,0,0.82} % Constantes et valeurs booléennes
+\definecolor{orange}{rgb}{0.9,0.45,0} % Opérateurs et ponctuation
+
+% Configuration du listing pour PHP
+\lstset{
+language        = php,
+basicstyle      = \scriptsize\ttfamily, % Taille lisible en monospace
+columns         = fullflexible, % Évite les espaces inutiles
+keepspaces      = true, % Préserve les e spaces
+showstringspaces= false, % Pas d'affichage des espaces
+upquote         = true, % Utiliser les guillemets droits
+breaklines      = true, % Retour à la ligne automatique
+tabsize         = 2, % Taille des tabulations
+frame           = single, % Cadre simple
+rulesepcolor    = \color{gray}, % Séparateur de cadre en gris
+inputencoding   = utf8,
+extendedchars   = true,
+backgroundcolor = \color{lightgray}, % Fond légèrement gris
+literate={
+{é}{{\'e}}1
+{à}{{\`a}}1
+{è}{{\`e}}1
+{ù}{{\`u}}1
+{â}{{\^a}}1
+{ê}{{\^e}}1
+{î}{{\^i}}1
+{ô}{{\^o}}1
+{û}{{\^u}}1
+{ë}{{\"e}}1
+{ï}{{\"i}}1
+{ö}{{\"o}}1
+{ü}{{\"u}}1
+{œ}{{\oe}}1
+{ç}{{\c{c}}}1
+{É}{{\'{E}}}1
+% {`}{{\T1\`}}1
+{’}{{\’}}1
+{,}{{\,}}1
+{-}{{\-}}1
+{_}{{\_}}1
+{@}{{\@}}1
+{*}{{\*}}1
+},
+keywordstyle    = \color{dkblue}\bfseries, % Bleu foncé + gras pour les mots-clés
+identifierstyle = \color{dkgreen}, % Vert pour les variables et noms de fonctions
+stringstyle     = \color{red}, % Rouge pour les chaînes de caractères
+commentstyle    = \color{gray}\itshape, % Gris italique pour les commentaires
+emph            = {true, false, null},
+emphstyle       = \color{purple}, % Violet pour les constantes PHP
+morekeywords    = {namespace, use, class, extends, public, private, protected, function, return, as, new, static, global, var, if, else, elseif, while, for, foreach, do, switch, case, break, continue, default, echo, print, die, exit, array, instanceof, try, catch, finally, throw, implements},
+moredelim       = **[is][\color{orange}]{@@}{@@}, % Orange pour les opérateurs `@@=`, `@@=>`, etc.
+rangeprefix		=\//`:~,	% inclusion suivant des marquers //' et 
+rangesuffix		=~:`,
+includerangemarker=false % Ne pas inclure les lignes de tags elles-mêmes
+}
+
+% Style spécifique pour PHP (au cas où il est utilisé ailleurs)
+\lstdefinestyle{php}{
+	morekeywords = {::, as}
+}
