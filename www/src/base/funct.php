@@ -11,6 +11,8 @@ function isDevMode(): bool
 
 /**
  * Méthode qui aide au débuggage
+ * 
+ * Utilise `die()` à la fin
  */
 function Debug()
 {
