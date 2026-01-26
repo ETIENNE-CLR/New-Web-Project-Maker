@@ -14,9 +14,20 @@ function isDevMode(): bool
  * 
  * Utilise `die()` à la fin
  */
-function Debug()
+function debug()
 {
     if (!isDevMode()) return;
     dump('Je suis passé par là');
     die();
+}
+
+/**
+ * Méthode qui permet de mettre en majuscule
+ * la première lettre d'un string
+ * @param string $str le string à transformer
+ * @return string Le string transformé
+ */
+function upperFirstChar(string $str): string
+{
+    return strtoupper($str[0]) . strtolower(substr($str, 1));
 }
