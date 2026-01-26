@@ -57,7 +57,7 @@ abstract class ActiveRecord implements ICRUD
     public static function read(int $id): ?static
     {
         $pdo = PDOSingleton::getInstance();
-        $stmt = $pdo->prepare("SELECT * FROM " . self::$table . " WHERE id = :id");
+        $stmt = $pdo->prepare("SELECT * FROM " . static::$table . " WHERE id = :id");
         $stmt->execute(['id' => $id]);
         return self::fromArray($stmt->fetch());
     }
@@ -69,7 +69,7 @@ abstract class ActiveRecord implements ICRUD
     public static function readAll(): array
     {
         $pdo = PDOSingleton::getInstance();
-        $stmt = $pdo->query("SELECT * FROM " . self::$table);
+        $stmt = $pdo->query("SELECT * FROM " . static::$table);
         return array_map(fn($data) => static::fromArray($data), $stmt->fetchAll());
     }
 
@@ -90,14 +90,14 @@ abstract class ActiveRecord implements ICRUD
             // Create
             $columns = implode(',', array_keys($properties));
             $placeholders = implode(',', array_fill(0, count($properties), '?'));
-            $stmt = $pdo->prepare("INSERT INTO " . self::$table . " ($columns) VALUES ($placeholders)");
+            $stmt = $pdo->prepare("INSERT INTO " . static::$table . " ($columns) VALUES ($placeholders)");
             $success = $stmt->execute(array_values($properties));
             if ($success) $this->id = $pdo->lastInsertId();
             return $success;
         } else {
             // Update
             $columns = implode(' = ?, ', array_keys($properties)) . ' = ?';
-            $stmt = $pdo->prepare("UPDATE " . self::$table . " SET $columns WHERE id = ?");
+            $stmt = $pdo->prepare("UPDATE " . static::$table . " SET $columns WHERE id = ?");
             return $stmt->execute([...array_values($properties), $this->id]);
         }
     }
@@ -110,7 +110,7 @@ abstract class ActiveRecord implements ICRUD
     {
         if (!isset($this->id)) return false;
         $pdo = PDOSingleton::getInstance();
-        $stmt = $pdo->prepare("DELETE FROM " . self::$table . " WHERE id = ?");
+        $stmt = $pdo->prepare("DELETE FROM " . static::$table . " WHERE id = ?");
         return $stmt->execute([$this->id]);
     }
 
