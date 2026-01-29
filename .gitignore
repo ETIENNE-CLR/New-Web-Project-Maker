@@ -3,7 +3,7 @@
 **/.vscode/
 
 # Personnal / WSL files
-**/~$
+~$**
 **desktop.ini
 **Zone.Identifier
 

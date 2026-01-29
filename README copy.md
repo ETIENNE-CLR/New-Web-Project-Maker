@@ -1,5 +1,5 @@
 # Nom projet
-Description
+Petit description
 
 ## 📝 Description du projet
 Description
