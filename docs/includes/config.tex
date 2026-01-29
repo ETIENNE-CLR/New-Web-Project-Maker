@@ -1,7 +1,8 @@
 % Informations générales du document
-\def\myauthor{Etienne Caulier, Daniel Miramontes, Myca Monney}
+\def\myauthor{Etienne Caulier}
+\def\myLesson{Atelier Web}
 \def\myemail{xxx@edu.ge.ch}
-\def\mytitle{PokéCrack}
+\def\mytitle{New Web Project Maker}
 \def\myClass{I.DA-P4B}
 \def\mySchool{CFPT Informatique}
 \date{\today}
@@ -31,9 +32,11 @@
 \pagestyle{fancy}
 \fancyhf{}
 
+\renewcommand{\sectionmark}[1]{ \markright{#1} }
+
 \fancyhead[L]{\mytitle}
 \fancyhead[C]{}
-\fancyhead[R]{\leftmark}
+\fancyhead[R]{\rightmark}
 
 \fancyfoot[L]{\myauthor}
 \fancyfoot[C]{}
