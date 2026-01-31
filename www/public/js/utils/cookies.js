@@ -18,3 +18,11 @@ export function setCookie(name, value, days = 365) {
     const expires = new Date(Date.now() + days * 864e5).toUTCString();
     document.cookie = `${name}=${value}; expires=${expires}; path=/`;
 }
+
+/**
+ * Fonction qui permet de supprimer un cookie
+ * @param {string} name Nom du cookie à supprimer
+ */
+export function removeCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
+}
