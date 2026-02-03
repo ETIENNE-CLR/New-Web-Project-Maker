@@ -1,8 +1,10 @@
 /**
- * FORM CHECKER (classe)
- * @author {Etienne Caulier}
+ * FORM CHECKER
+ * 
  * Classe JavaScript qui permet de vérifier automatiquement, correctement
  * et simplement les champs d'un formulaire html
+ * 
+ * @author Etienne Caulier
  */
 export class FormChecker {
     /**

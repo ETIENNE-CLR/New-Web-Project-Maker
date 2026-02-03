@@ -4,6 +4,8 @@ import { JWT_KEY } from "./var.js";
 /**
  * Classe qui permet de faire les fetchs CRUD
  * Utile pour les projets avec une API Rest
+ * 
+ * @author Etienne Caulier
  */
 export class RequestSender {
     /**
