@@ -5,6 +5,7 @@ namespace Controllers;
 use Models\HttpCodeHelper;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Services\AuthService;
 
 /**
  * Contrôleur de l'API principale
@@ -28,7 +29,7 @@ class ApiController
     /**
      * Instance de la classe logger pour gérer tout ce qui est connexion
      */
-    private Logger $logger;
+    private AuthService $logger;
 
     /**
      * Point d'entrée de l'API.
@@ -52,7 +53,7 @@ class ApiController
 
         // Détection de la méthode HTTP utilisée
         if (!isset($this->logger)) {
-            $this->logger = new Logger();
+            $this->logger = new AuthService();
         }
         $method = $request->getMethod();
         $returnData = $this->httpMethodViewer($method, $request, $response, $args);
@@ -70,7 +71,7 @@ class ApiController
      */
     public static function userIsConnected(Response $response): bool
     {
-        return Logger::getUserId($response) !== null;
+        return AuthService::getUserId($response) !== null;
     }
 
     /**

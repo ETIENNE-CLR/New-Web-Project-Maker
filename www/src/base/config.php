@@ -2,7 +2,7 @@
 
 // Config
 date_default_timezone_set('Europe/Paris');
-require ROOT_PATH . 'src/base/env.php';
+require ROOT_PATH . 'src/dependencies/env.php';
 require ROOT_PATH . 'src/base/funct.php';
 
 // Affichage des erreurs

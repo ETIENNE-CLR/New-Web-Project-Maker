@@ -18,8 +18,8 @@ $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 
 // Initialisation middlewares et autres configurations
-require ROOT_PATH . 'src/middlewares/error-handling.php';
-require ROOT_PATH . 'src/middlewares/multi-language.php';
+require ROOT_PATH . 'src/dependencies/error-handling.php';
+require ROOT_PATH . 'src/dependencies/multi-language.php';
 
 // Définir les routes
 require ROOT_PATH . 'src/routes/web.php';
