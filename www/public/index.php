@@ -17,9 +17,11 @@ $app = AppFactory::create();
 $app->addRoutingMiddleware();
 $app->addBodyParsingMiddleware();
 
-// Initialisation middlewares et autres configurations
+// Initialisation des dépendances
+require ROOT_PATH . 'src/dependencies/multi-language.php';
+
+// Initialisation des middlewares
 require ROOT_PATH . 'src/middlewares/error-handling.php';
-require ROOT_PATH . 'src/middlewares/multi-language.php';
 
 // Définir les routes
 require ROOT_PATH . 'src/routes/web.php';
