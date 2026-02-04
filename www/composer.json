@@ -8,6 +8,8 @@
             "ActiveRecord\\": "src/models/AR/",
             "Controllers\\": "src/controllers/",
             "Interfaces\\": "src/interfaces/",
+            "Middlewares\\": "src/middlewares/",
+            "Services\\": "src/services/",
             "Enums\\": "src/enums/"
         }
     },

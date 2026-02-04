@@ -16,8 +16,19 @@ use PDO;
  */
 class LanguageController
 {
+    /**
+     * Langue par défaut utilisée si aucune langue n'est définie dans la session
+     */
     public const DEFAULT_LANGUAGE = 'fr';
+
+    /**
+     * Clé de session utilisée pour stocker la langue active
+     */
     private const SESSION_KEY = 'language';
+
+    /**
+     * Charset utilisé pour les réponses HTTP liées à la langue
+     */
     public const CHARSET = 'UTF-8';
 
     /**
@@ -109,6 +120,6 @@ class LanguageController
      */
     public static function isThisKeyCurrentLanguage(string $key): bool
     {
-        return self::LANGUAGES()[$key] == self::getLanguage();
+        return self::LANGUAGES()[$key] === self::getLanguage();
     }
 }
