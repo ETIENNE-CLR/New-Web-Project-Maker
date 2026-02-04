@@ -88,12 +88,14 @@
                 if (typeof champ !== "string") throw new Error(`La valeur ${champ} n'est pas un string !`);
 
                 // Gestion clé primaire
-                if (champ.startsWith('_') && champ.endsWith('_')) {
+                const isPrimaryKey = champ.startsWith('_') && champ.endsWith('_');
+                if (isPrimaryKey) {
                     span.classList.add('primaryKey');
                 }
-                
+
                 // Gestion clé secondaire
-                if (champ.startsWith('#')) {
+                const isSecondaryKey = champ.startsWith('#') || (isPrimaryKey && champ.startsWith('_#'));
+                if (isSecondaryKey) {
                     span.classList.add('secondaryKey');
                 }
 
