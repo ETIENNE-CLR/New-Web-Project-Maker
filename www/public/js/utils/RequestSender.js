@@ -1,6 +1,3 @@
-import { getCookie } from "./cookies.js";
-import { JWT_KEY } from "./var.js";
-
 /**
  * Classe qui permet de faire les fetchs CRUD
  * Utile pour les projets avec une API Rest
@@ -17,9 +14,7 @@ export class RequestSender {
         try {
             const response = await fetch(url, {
                 method: 'GET',
-                headers: {
-                    "Authorization": 'Bearer ' + getCookie(JWT_KEY)
-                }
+                headers: {}
             });
 
             if (!response.ok) {
@@ -43,8 +38,7 @@ export class RequestSender {
             const response = await fetch(url, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + getCookie(JWT_KEY)
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(jsonbody),
                 credentials: "include"
@@ -74,8 +68,7 @@ export class RequestSender {
             const response = await fetch(url, {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
-                    'Authorization': 'Bearer ' + getCookie(JWT_KEY)
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(jsonbody),
             });
@@ -99,9 +92,7 @@ export class RequestSender {
         try {
             const response = await fetch(url, {
                 method: "DELETE",
-                headers: {
-                    'Authorization': 'Bearer ' + getCookie(JWT_KEY)
-                }
+                headers: {}
             });
 
             if (!response.ok) {

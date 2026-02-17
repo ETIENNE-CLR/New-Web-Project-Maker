@@ -32,7 +32,7 @@ class AuthService
     public static function getToken(Response $response, bool $testMode = false): stdClass|false
     {
         // Tentative depuis cookie
-        $jwt = $_COOKIE['JWT'] ?? null;
+        $jwt = $_COOKIE[$_ENV['JWT_KEY']] ?? null;
 
         if (!$jwt) {
             if ($testMode) return false;
@@ -220,7 +220,7 @@ class AuthService
 
         // Setter
         $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], self::CRYPT_ALGO);
-        setcookie('JWT', $jwt, [
+        setcookie($_ENV['JWT_KEY'], $jwt, [
             'expires' => time() + 86400 * $nbDays,
             'path' => '/',
             'httponly' => true,

@@ -37,7 +37,7 @@ class AuthMiddleware
         ServerRequestInterface $request,
         RequestHandlerInterface $handler
     ): ResponseInterface {
-        $token = $request->getCookieParams()['JWT'] ?? null;
+        $token = $request->getCookieParams()[$_ENV['JWT_KEY']] ?? null;
 
         if (!$token) {
             return new Response(HttpCodeHelper::UNAUTHORIZED);
