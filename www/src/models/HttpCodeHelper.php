@@ -23,6 +23,12 @@ class HttpCodeHelper
     public const int NO_CONTENT = 204;
 
     /**
+     * Indique une redirection temporaire.
+     * Il signale au navigateur d'accéder à une autre URL via une méthode GET
+     */
+    public const int SEE_OTHER = 303;
+
+    /**
      * Requête mal formée ou paramètres invalides
      */
     public const int BAD_REQUEST = 400;
