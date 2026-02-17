@@ -220,13 +220,7 @@ class AuthService
 
         // Setter
         $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], self::CRYPT_ALGO);
-        setcookie($_ENV['JWT_KEY'], $jwt, [
-            'expires' => time() + 86400 * $nbDays,
-            'path' => '/',
-            'httponly' => true,
-            'secure' => true,
-            'samesite' => 'Strict'
-        ]);
+        setcookie($_ENV['JWT_KEY'], $jwt, $expirationTime, '/');
         return $jwt;
     }
 }
