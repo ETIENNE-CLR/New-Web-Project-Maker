@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Models\AppInfo;
 use Models\PDOSingleton;
 use Slim\Views\PhpRenderer;
 use Psr\Http\Message\ResponseInterface as Response;
@@ -13,11 +14,6 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 class WebController
 {
-    /**
-     * Nom complet du jeu
-     */
-    public const string APP_NAME = "New Web Project maker";
-
     /**
      * Test la connexion avec la bdd
      * @return bool True si la connexion marche, False si ça marche pas
@@ -49,7 +45,7 @@ class WebController
     public function home(Request $request, Response $response): Response
     {
         // Affichage de la vue avec le layout
-        $dataLayout = ['title' => 'New Web Project Maker'];
+        $dataLayout = ['title' => AppInfo::NAME];
         $phpView = new PhpRenderer(ROOT_PATH . 'src/views', $dataLayout);
         $phpView->setLayout('layouts/empty.php');
         return $phpView->render($response, 'home.php');
