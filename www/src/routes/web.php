@@ -33,3 +33,4 @@ $app->group('/delivery', function ($group) {
     ->add(new RoleMiddleware('livreur'))
     ->add(new AuthMiddleware());
 
+*/
