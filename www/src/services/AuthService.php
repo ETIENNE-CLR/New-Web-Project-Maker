@@ -135,19 +135,9 @@ class AuthService
             return $messages;
         }
 
-        // Authentification réussie - Génération du JWT
-        $jwtPayload = [
-            'id' => $user->id,
-            'email' => $user->email
-        ];
-
-        $expiresInDays = $rememberMe ? 31 : 1;
-        $messages["jwt"] = self::generateNewJWT($jwtPayload, $expiresInDays);
-
-        $messages['nbDays'] = $expiresInDays;
-        $messages["estLivreur"] = $user->estLivreur;
-
-        return $messages;
+        // Authentification réussie
+        $response->withStatus(HttpCodeHelper::OK);
+        return self::validation($user, $rememberMe);
     }
 
     /**
@@ -187,18 +177,32 @@ class AuthService
         $newUser->username = $username;
         $newUser->password = $passwordHasher->hash($password);
         // $newUser->save();
-        $response->withStatus(HttpCodeHelper::OK);
 
-        // Authentification réussie - Génération du JWT
+        // Authentification réussie
+        $response->withStatus(HttpCodeHelper::OK);
+        return self::validation($newUser, $rememberMe);
+    }
+
+    /**
+     * Fonction qui va finaliser la connexion
+     * @param User $user utilisateur qu'on doit connecter
+     * @param bool $rememberMe Option qui sert à dire s'il faut garder la connexion
+     * @return array tableau qui comprendra toutes les infos de retour
+     */
+    private static function validation(stdClass $user, bool $rememberMe): array
+    {
+        $expiresInDays = $rememberMe ? 31 : 0.5;
         $jwtPayload = [
-            'id' => $newUser->id
+            'user' => $user->toArray()
         ];
 
-        $expiresInDays = $rememberMe ? 31 : 1;
-        $messages["jwt"] = self::generateNewJWT($jwtPayload, $expiresInDays);
-        $messages['nbDays'] = $expiresInDays;
-
-        return $messages;
+        return [
+            'success' => true,
+            'jwt' => [
+                'token' => self::generateNewJWT($jwtPayload, $expiresInDays),
+                'expireNbDays' => $expiresInDays
+            ]
+        ];
     }
 
     /**
@@ -207,7 +211,7 @@ class AuthService
      * @param int $nbDays le nombre de jours que le jwt sera valide
      * @return string le token généré
      */
-    public static function generateNewJWT(array $data = [], int $nbDays = 31): string
+    public static function generateNewJWT(array $data = [], float $nbDays = 31): string
     {
         // Init
         $issuedAt = time();
